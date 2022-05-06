@@ -101,7 +101,7 @@ def download_solver(output_directory=None):
 
     if output_directory is None:
         print('downloading solver to home...')
-        output_directory = os.environ['HOME']
+        output_directory = os.path.dirname(os.path.abspath(__file__ ) )
 
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
