@@ -11,6 +11,18 @@ import numpy as np
 from zipfile import ZipFile
 
 
+def clean_varcov( varcov ):
+    if isinstance( varcov, pd.DataFrame):
+        varcov = varcov.values
+        
+    return varcov
+
+def clean_returns(returns):
+    if isinstance( returns, list):
+        returns = np.array( returns )
+
+    return returns
+
 def kelley_optimizer( returns, varcov, rfr, ipopt_directory=None):
     '''
     Parameters
@@ -44,7 +56,8 @@ def kelley_optimizer( returns, varcov, rfr, ipopt_directory=None):
     ------------------
     https://medium.com/raposa-technologies/how-to-use-python-and-the-kelly-criterion-to-optimize-your-stock-portfolio-bb6e43df50c2
     '''
-
+    returns = clean_returns(returns)
+    varcov = clean_varcov( varcov )
 
     if ipopt_directory is None:
         fp_executable = os.path.join( os.path.dirname(os.path.abspath(__file__ ) ), 'ipopt' )
